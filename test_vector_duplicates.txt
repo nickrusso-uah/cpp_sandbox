@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+
+bool isDuplicate(const std::vector<int>& newVector, const std::unordered_set<std::vector<int>>& vectorSet) {
+    return vectorSet.find(newVector) != vectorSet.end();
+}
+
+int main() {
+    std::unordered_set<std::vector<int>> vectorSet;
+
+    // Example: Adding vectors to the set
+    vectorSet.insert({1, 2, 3});
+    vectorSet.insert({4, 5, 6});
+    vectorSet.insert({7, 8, 9});
+
+    // Check if a new vector is a duplicate
+    std::vector<int> newVector = {4, 5, 6};
+    if (isDuplicate(newVector, vectorSet)) {
+        std::cout << "The vector is a duplicate." << std::endl;
+    } else {
+        std::cout << "The vector is not a duplicate." << std::endl;
+    }
+
+    return 0;
+}

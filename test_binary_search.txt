@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+class MyClass {
+public:
+    int score;
+
+    MyClass(int s) : score(s) {}
+};
+
+bool compareByScore(const MyClass* a, const MyClass* b) {
+    return a->score < b->score;
+}
+
+std::vector<MyClass*>::iterator insertSorted(std::vector<MyClass*>& sortedVector, const MyClass* newClass) {
+    return std::lower_bound(sortedVector.begin(), sortedVector.end(), newClass, compareByScore);
+}
+
+int main() {
+    std::vector<MyClass*> sortedVector;
+
+    // Example: Adding classes to the sorted vector
+    sortedVector.push_back(new MyClass(3));
+    sortedVector.push_back(new MyClass(5));
+    sortedVector.push_back(new MyClass(8));
+
+    // Inserting a new class with score 6
+    MyClass* newClass = new MyClass(6);
+    auto insertionPoint = insertSorted(sortedVector, newClass);
+
+    // Insert the new class at the determined position
+    sortedVector.insert(insertionPoint, newClass);
+
+    // Displaying the sorted vector
+    for (const auto& myClass : sortedVector) {
+        std::cout << myClass->score << " ";
+    }
+
+    // Don't forget to free memory allocated for MyClass instances
+    for (const auto& myClass : sortedVector) {
+        delete myClass;
+    }
+
+    return 0;
+}
